@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+    <style>
+    input[type=text], select {
+      width: 75%;
+      padding: 12px 20px;
+      margin: 8px 0;
+      display: inline-block;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
+
+    input[type=date], select {
+      width: 30%;
+      padding: 12px 20px;
+      margin: 8px 0;
+      display: inline-block;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+      font-size: 16px; 
+    }
+    
+    input[type=time], select {
+      width: 20%;
+      padding: 12px 20px;
+      margin: 8px 0;
+      display: inline-block;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+      font-size: 16px; 
+    }
+    
+    input[type=submit] {
+      width: 24%;
+      background-color: #4CAF50;
+      color: white;
+      padding: 14px 20px;
+      margin: 8px 0;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    
+    input[type=submit]:hover {
+      background-color: #45a049;
+    }
+    
+    div {
+      width: 50%;
+      border-radius: 5px;
+      background-color: #f2f2f2;
+      padding: 20px;
+    }
+    
+    <!--#map {
+      position: absolute;
+      top: 80px;
+      right: 10px;
+    }-->
+    </style>
+    <head>
+        <title>Google Map 查詢</title>
+        <script type="module" src="https://unpkg.com/@googlemaps/extended-component-library@0.6">   <!-- 用在Places API -->
+        </script>
+    </head>
+    <body>
+        <gmpx-api-loader key="AIzaSyDOcGLf8tlo5p-rN5TOshXNt7rShhiN4jo" solution-channel="GMP_GE_placepicker_v1">    <!-- 用在Places API -->
+        </gmpx-api-loader>
+        <h1>Google Map 查詢</h1>
+        
+		<h2 id="error_text" style="color:Tomato;">{{ error_text }}</h2>
+        <div>
+          <form action="/map", method="post">
+            <div id="out"></div>
+            <input type="hidden" id="latitude" name="latitude">
+            <input type="hidden" id="longitude" name="longitude">
+
+            <label for="departure">出發地</label><br>
+            <!--<gmpx-place-picker id="start" name="start" placeholder="出發地"></gmpx-place-picker><br><br>-->    <!-- 用在Places API -->
+            <input type="text" id="departure" name="departure" placeholder="出發地" value="{{ departurE }}">
+            <label onclick="geoFindMe_departure()">使用我的目前位置</label><br>
+
+            <label for="arrival">目的地</label><br>
+            <!--<gmpx-place-picker id="arrival" name="arrival" placeholder="目的地"></gmpx-place-picker><br><br>-->    <!-- 用在Places API -->
+            <input type="text" id="arrival" name="arrival" placeholder="目的地" value="{{ arrivaL }}">
+            <label onclick="geoFindMe_arrival()">使用我的目前位置</label><br>
+            <br>
+            <label for="departure_time">出發時間</label>
+            <input type="date" id="departure_day" value="{{ todaY }}" name="departure_day" />
+            <input type="time" id="departure_time" value="{{ todaY_time }}" name="departure_time" />
+          
+            <input type="submit" value="查詢">
+          </form>
+        </div>
+        <!--<iframe id="map" width="600" height="450" style="border:0" loading="lazy" 
+        allowfullscreen referrerpolicy="no-referrer-when-downgrade" 
+        src="https://www.google.com/maps/embed/v1/view?key=AIzaSyDOcGLf8tlo5p-rN5TOshXNt7rShhiN4jo&zoom=7&center=23.6978%2C120.9605">
+        </iframe>-->
+    
+        
+    </body>
+</html>
+
+
+
+<script>
+function geoFindMe_departure() {
+  var gO = document.getElementById("departure")
+  geoFindMe(gO)
+}
+
+function geoFindMe_arrival() {
+  var gO = document.getElementById("arrival")
+  geoFindMe(gO)
+}
+
+
+function geoFindMe(gO) {
+  var lat = document.getElementById("latitude");
+  var lon = document.getElementById("longitude");
+  var output = document.getElementById("out");
+
+  if (!navigator.geolocation) {
+    output.innerHTML = "<p>Geolocation is not supported by your browser</p>";
+    return;
+  }
+
+  function success(position) {
+    var latitude = position.coords.latitude;
+    var longitude = position.coords.longitude;
+
+    output.innerHTML = ""
+    lat.value = latitude;
+    lon.value = longitude;
+    gO.value = "我的目前位置"
+  }
+
+  function error() {
+    output.innerHTML = "Unable to retrieve your location";
+  }
+
+  output.innerHTML = "<p>Locating…</p>";
+
+  navigator.geolocation.getCurrentPosition(success, error);
+}
+
+</script>

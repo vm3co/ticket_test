@@ -1,0 +1,5 @@
+flask
+requests
+selenium
+bs4
+ddddocr

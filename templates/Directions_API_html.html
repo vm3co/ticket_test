@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Google Map 查詢</title>
+            <style>
+            .way_list {
+              font-family: Arial, Helvetica, sans-serif;
+              border-collapse: collapse;
+              width: 50%;
+            }
+            
+            .way_list td, .way_list th {
+              border: 1px solid #ddd;
+              padding: 8px;
+            }
+            
+            .way_list th {
+              width: 20%;
+            }
+            
+            .way_list tr:nth-child(even){background-color: #f2f2f2;}
+            
+            .way_list tr:hover {background-color: #ddd;}
+            
+            .way_list th {
+              padding-top: 12px;
+              padding-bottom: 12px;
+              text-align: left;
+              background-color: #04AA6D;
+              color: white;
+            }
+
+            #map {
+              position: absolute;
+              top: 80px;
+              right: 10px;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Google Map 查詢</h1>
+        <h2>出發地：{{ departurE }}</h2>
+        <h2>目的地：{{ arrivaL }}</h2>
+        <!--<h2>交通方式：{{ traffic }}</h2>-->
+        <h2>{{ way_list[0]["departure_time"] }} - {{ way_list[0]["arrival_time"] }}</h2>
+        <h3>({{ way_list[0]["total_duration"] }})({{ way_list[0]["total_distance"] }})</h3>
+        
+        {% for ii in way_list[1] %}
+            {%if "step_detail" in ii %}
+                <form action="/", method="post">
+                    <table class="way_list">
+                        <tr>
+                          <th>移動方式</th>
+                          <td>{{ ii["travel_mode"] }} ({{ ii["duration"] }}) ({{ ii["distance"] }})</td>    
+                        </tr>
+                        <tr>
+                          <th>路線說明</th>
+                          <td>{{ ii["instruction"] }}</td>
+                        </tr>
+                            {% for jj in ii['step_detail'] %}
+                            <tr>
+                              {% if ii['step_detail'].index(jj) == 0 %}
+                              <th rowspan="{{ ii['step_detail']|length }}">路線細節</th>
+                              {% endif %}
+                              <td>{{ jj["route"] }} ({{ jj["duration"] }}) ({{ jj["distance"] }})</td>
+                            </tr>
+                            {% endfor %}
+                    </table>
+                </form>
+            {% else %}
+                {% if ii["travel_mode"] == "高鐵" %}
+                    <form action="/hsr", method="post">
+                {% elif ii["travel_mode"] == "臺鐵" %}
+                    <form action="/railway", method="post">
+                {% elif ii["travel_mode"] == "公車" %}
+                    <form action="/bus", method="post">
+                {% endif %}
+                        <input type="hidden" class="transit_detail" name="transit_detail" value="{{ ii['transit_detail'] }}">
+                        <table class="way_list">
+                            <tr>
+                              <th>移動方式</th>
+                              <td colspan="2">{{ ii["travel_mode"] }} ({{ ii["duration"] }}) ({{ ii["distance"] }})    
+                              {% if ii["travel_mode"] != "捷運" %}
+                                  <input type="submit" value="訂票">
+                              {% endif %}    
+                              </td>
+                            </tr>
+                            <tr>
+                              <th>路線說明</th>
+                              <td colspan="2">{{ ii["instruction"] }}</td>
+                            </tr>
+                                <tr>
+                                  <th rowspan="{{ ii['transit_detail']|length }}">車次細節</th>
+                                  <td>車次</td>
+                                  <td>{{ ii["transit_detail"]["transit_name"] }} {{ ii["transit_detail"]["transit_number"] }}</td>
+                                </tr>
+                                <tr>
+                                  <td>時間</td>
+                                  <td>{{ ii["transit_detail"]["departure_time_show"] }} ~ {{ ii["transit_detail"]["arrival_time_show"] }}</td>
+                                </tr>
+                                <tr>
+                                  <td>出發站</td>
+                                  <td>{{ ii["transit_detail"]["departure_stop"] }}</td>
+                                </tr>
+                                <tr>
+                                  <td>到達站</td>
+                                  <td>{{ ii["transit_detail"]["arrival_stop"] }}</td>
+                                </tr>
+                        </table>
+                    </form>
+            {% endif %}
+        <br>
+        {% endfor %}
+        <iframe id="map" width="600" height="450" style="border:0" loading="lazy" 
+        allowfullscreen referrerpolicy="no-referrer-when-downgrade" 
+        src="https://www.google.com/maps/embed/v1/directions?key=AIzaSyDOcGLf8tlo5p-rN5TOshXNt7rShhiN4jo&origin={{ departurE }}&destination={{ arrivaL }}&mode=transit">
+
+    </body>
+</html>
+
+
+<script>
+    <!--先確認使用者裝置能不能抓地點-->
+    if(navigator.geolocation) {
+    
+      <!--使用者不提供權限，或是發生其它錯誤-->
+      function error() {
+        alert('無法取得你的位置');
+      }
+    
+      <!--使用者允許抓目前位置，回傳經緯度-->
+      function success(position) {
+        console.log(position.coords.latitude, position.coords.longitude);
+      }
+    
+      <!--跟使用者拿所在位置的權限-->
+      navigator.geolocation.getCurrentPosition(success, error);
+    
+    } else {
+      alert('Sorry, 你的裝置不支援地理位置功能。')
+    }
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

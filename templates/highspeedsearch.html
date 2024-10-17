@@ -1,0 +1,227 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>高鐵訂票</title>
+</head>
+   <body>
+
+     <h1>高鐵訂票系統</h1>
+     <h2 style="color:Tomato;">{{ans}}</h2>
+      <form action = "/hsr/search" method ="POST">
+		 <input type="hidden" class="transit_detail" name="transit_detail" value="{{ transit_detail }}">
+            <h3>起始站: {{ transit_detail["departure_stop"] }}</h3>
+            <!--<dd>
+                 <select style="font-size:16px;" name="StartStation">
+                 <option value="南港" >  南港 </option>
+                 <option value="台北" >  台北 </option>
+                 <option value="板橋" >  板橋 </option>
+                 <option value="桃園" >  桃園 </option>
+                 <option value="新竹" >  新竹 </option>
+                 <option value="苗栗" >  苗栗 </option>
+                 <option value="台中" >  台中 </option>
+                 <option value="彰化" >  彰化 </option>
+                 <option value="雲林" >  雲林 </option>
+                 <option value="嘉義" >  嘉義 </option>
+                 <option value="台南" >  台南 </option>
+                 <option value="左營" >  左營 </option>                                  
+                 </select>
+            </dd>-->
+            <h3>到達站: {{ transit_detail["arrival_stop"] }}</h3>
+            <!--<dd>
+                 <select style="font-size:16px;" name="DestinationStation">
+                 <option value="南港" >  南港 </option>
+                 <option value="台北" >  台北 </option>
+                 <option value="板橋" >  板橋 </option>
+                 <option value="桃園" >  桃園 </option>
+                 <option value="新竹" >  新竹 </option>
+                 <option value="苗栗" >  苗栗 </option>
+                 <option value="台中" >  台中 </option>
+                 <option value="彰化" >  彰化 </option>
+                 <option value="雲林" >  雲林 </option>
+                 <option value="嘉義" >  嘉義 </option>
+                 <option value="台南" >  台南 </option>
+                 <option value="左營" >  左營 </option>
+                 </select>
+            </dd>-->
+            <h3>乘車時間:{{ transit_detail["arrival_time_show"] }}</h3>
+            <!--<dd>
+                 <select style="font-size:16px;" name="mon">
+                 <option value="1" >  1 月  </option>
+                 <option value="2" >  2 月  </option>
+                 <option value="3" >  3 月  </option>
+                 <option value="4" >  4 月  </option>
+                 <option value="5" >  5 月  </option>
+                 <option value="6" >  6 月  </option>
+                 <option value="7" >  7 月  </option>
+                 <option value="8" >  8 月  </option>
+                 <option value="9" >  9 月  </option>
+                 <option value="10" >  10 月  </option>
+                 <option value="11" >  11 月  </option>
+                 <option value="12" >  12 月  </option>                                                                                     
+                 </select>
+            </dd>
+            <!--<dt>乘車 日:</dt>
+            <dd>
+                 <select style="font-size:16px;" name="day">
+                 <option value="1" >  1 日  </option>
+                 <option value="2" >  2 日  </option>
+                 <option value="3" >  3 日  </option>
+                 <option value="4" >  4 日  </option>
+                 <option value="5" >  5 日  </option>
+                 <option value="6" >  6 日  </option>
+                 <option value="7" >  7 日  </option>
+                 <option value="8" >  8 日  </option>
+                 <option value="9" >  9 日  </option>
+                 <option value="10" >  10 日  </option>
+                 <option value="11" >  11 日  </option>
+                 <option value="12" >  12 日  </option>
+                 <option value="13" >  13 日  </option>
+                 <option value="14" >  14 日  </option>
+                 <option value="15" >  15 日  </option>
+                 <option value="16" >  16 日  </option>
+                 <option value="17" >  17 日  </option>
+                 <option value="18" >  18 日  </option>
+                 <option value="19" >  19 日  </option>
+                 <option value="20" >  20 日  </option>
+                 <option value="21" >  21 日  </option>
+                 <option value="22" >  22 日  </option>
+                 <option value="23" >  23 日  </option>
+                 <option value="24" >  24 日  </option>
+                 <option value="25" >  25 日  </option>
+                 <option value="26" >  26 日  </option>
+                 <option value="27" >  27 日  </option>
+                 <option value="28" >  28 日  </option>
+                 <option value="29" >  29 日  </option>
+                 <option value="30" >  30 日  </option>
+                 <option value="31" >  31 日  </option>                                
+                 </select>
+            </dd>  -->
+            <h3>班次 編號: {{ transit_detail["transit_number"] }}</h3>
+            <!--<dd>				
+               <input type = "text" name = "service_number" >
+            </dd>-->
+         <dl>
+            <dt>全票:</dt>
+            <dd>
+                 <select style="font-size:16px;" name="fullticket">
+                 <option value="0" >  0 張  </option>
+                 <option value="1" >  1 張  </option>
+                 <option value="2" >  2 張  </option>
+                 <option value="3" >  3 張  </option>
+                 <option value="4" >  4 張  </option>
+                 <option value="5" >  5 張  </option>
+                 <option value="6" >  6 張  </option>
+                 <option value="7" >  7 張  </option>
+                 <option value="8" >  8 張  </option>
+                 <option value="9" >  9 張  </option>
+                 <option value="10" >  10 張  </option>                                                                    
+                 </select>
+            </dd>
+            </dd>
+            <dt>孩童票:</dt>
+            <dd>
+                 <select style="font-size:16px;" name="chileticket">
+                 <option value="0" >  0 張  </option>
+                 <option value="1" >  1 張  </option>
+                 <option value="2" >  2 張  </option>
+                 <option value="3" >  3 張  </option>
+                 <option value="4" >  4 張  </option>
+                 <option value="5" >  5 張  </option>
+                 <option value="6" >  6 張  </option>
+                 <option value="7" >  7 張  </option>
+                 <option value="8" >  8 張  </option>
+                 <option value="9" >  9 張  </option>
+                 <option value="10" >  10 張  </option>  
+                 </select>
+            </dd>
+            </dd>
+            <dt>愛心票:</dt>
+            <dd>
+                 <select style="font-size:16px;" name="loveticket">
+                 <option value="0" >  0 張  </option>
+                 <option value="1" >  1 張  </option>
+                 <option value="2" >  2 張  </option>
+                 <option value="3" >  3 張  </option>
+                 <option value="4" >  4 張  </option>
+                 <option value="5" >  5 張  </option>
+                 <option value="6" >  6 張  </option>
+                 <option value="7" >  7 張  </option>
+                 <option value="8" >  8 張  </option>
+                 <option value="9" >  9 張  </option>
+                 <option value="10" >  10 張  </option>  
+                 </select>
+            </dd>
+            </dd>
+            <dt>敬老票(65+):</dt>
+            <dd>
+                 <select style="font-size:16px;" name="oldticket">
+                 <option value="0" >  0 張  </option>
+                 <option value="1" >  1 張  </option>
+                 <option value="2" >  2 張  </option>
+                 <option value="3" >  3 張  </option>
+                 <option value="4" >  4 張  </option>
+                 <option value="5" >  5 張  </option>
+                 <option value="6" >  6 張  </option>
+                 <option value="7" >  7 張  </option>
+                 <option value="8" >  8 張  </option>
+                 <option value="9" >  9 張  </option>
+                 <option value="10" >  10 張  </option>  
+                 </select>
+            </dd>
+            </dd>
+            <dt>大學生票:</dt>
+            <dd>
+                 <select style="font-size:16px;" name="collegeticket">
+                 <option value="0" >  0 張  </option>
+                 <option value="1" >  1 張  </option>
+                 <option value="2" >  2 張  </option>
+                 <option value="3" >  3 張  </option>
+                 <option value="4" >  4 張  </option>
+                 <option value="5" >  5 張  </option>
+                 <option value="6" >  6 張  </option>
+                 <option value="7" >  7 張  </option>
+                 <option value="8" >  8 張  </option>
+                 <option value="9" >  9 張  </option>
+                 <option value="10" >  10 張  </option>  
+                 </select>
+            </dd>                                                                            
+         </dl>
+		 <h3>個人資料(套登入介面後會拿掉)</h3>
+		 <input type="text" id="nationid" name="nationid" placeholder="身分證字號">
+		 <input type="text" id="phonenumber" name="phonenumber" placeholder="手機號碼"><br>
+		 <label for="headless">[測試]無頭模式</label>
+		  <select name="headless" id="headless">
+			<option value="T">使用無頭模式</option>
+			<option value="F">不使用無頭模式</option>
+		  </select>
+		 
+         <p>
+		 <h2 id="out" style="color:Tomato;"></h2>
+	     <input type = "submit" value ="訂票" onclick="loading()"></p>
+         <p style="font-size: 100%;">
+                  <a href="/index" style="display: inline-block; padding: 5px 10px; background-color: #007BFF; color: white; text-decoration: none; border-radius: 5px;">回首頁
+                  </a>
+                  <a href="https://irs.thsrc.com.tw/IMINT/?wicket:bookmarkablePage=:tw.com.mitac.webapp.thsr.viewer.History" target="_blank" style="display: inline-block; padding: 5px 10px; background-color: #007BFF; color: white; text-decoration: none; border-radius: 5px;">取消訂票
+                  </a>
+        </p>
+      </form>
+   </body>
+</html>
+
+
+<script>
+	let intervalId;
+
+	function loading() {
+	  const output = document.getElementById("out");
+	  let dots = '';
+	  let count = 0;  
+	  
+	  intervalId = setInterval(() => {
+		  count = (count + 1) % 3;
+		  dots = '.'.repeat(count + 1);
+		  output.textContent = `查詢中，請勿關閉頁面${dots}`;
+	  }, 1000);
+	}
+
+</script>
